@@ -1,0 +1,70 @@
+DEBUT()
+
+mesh = LIRE_MAILLAGE(FORMAT='MED', UNITE=20)
+
+model = AFFE_MODELE(
+                     AFFE=_F(
+                     GROUP_MA='face_1',
+                     MODELISATION='DKT',
+                     PHENOMENE='MECANIQUE'),
+                     MAILLAGE=mesh
+                   )
+
+elemprop = AFFE_CARA_ELEM(
+                           COQUE=_F(
+                                     EPAIS=<H>,
+                                     GROUP_MA='face_1',
+                                     VECTEUR=(1.0, 0.0, 0.0)
+                                   ),
+                           MODELE=model
+                         )
+
+mater = DEFI_MATERIAU(
+                       ELAS=_F(
+                               E=<E>,
+                               NU=<NU>)
+                      )
+
+fieldmat = AFFE_MATERIAU(
+                         AFFE=_F(
+                                 GROUP_MA='face_1',
+                                 MATER=mater
+                                ),
+                         MODELE=model
+                        )
+
+bc = AFFE_CHAR_MECA(
+                    DDL_IMPO=_F(
+                                <bcs>,
+                                GROUP_NO='border'
+                                ),
+                    MODELE=model
+                    )
+
+load = AFFE_CHAR_MECA(
+                       MODELE=model,
+                       PRES_REP=_F(
+                                   GROUP_MA='face_1',
+                                   PRES= <PRES>
+                                  )
+                     )
+
+reslin = MECA_STATIQUE(
+                        CARA_ELEM=elemprop,
+                        CHAM_MATER=fieldmat,
+                        EXCIT=(_F(CHARGE=load), _F(CHARGE=bc)),
+                        MODELE=model
+                      )
+
+IMPR_RESU(
+           FORMAT='RESULTAT',
+           RESU=_F(
+                   RESULTAT=reslin,
+                   VALE_MAX='OUI'
+                   ),
+           UNITE=80
+           )
+
+IMPR_RESU(FORMAT='MED', RESU=_F(RESULTAT=reslin), UNITE=2)
+
+FIN()

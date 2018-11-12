@@ -1,0 +1,68 @@
+################################################
+#     TEST input data file, please don't modify
+#       Plate Finite-Element Simulation
+#     Plate Bending Under Uniform Pressure       
+#
+#         y|______
+#          |      |
+#          |      |
+#          |      | b
+#          |      |
+#          |______|___x
+#              a
+#
+# The plate geometry must be provided in iges format, unit meter.
+#
+#            edge y1   
+#         y|______
+#          |      |
+#          |      |
+#  edge x0 |      | edge x1
+#          |      |
+#          |______|___x
+#           edge y0 
+#  
+# 
+# Input data required:
+#   - GEOFILE:  Path to the iges geometry file
+#   - SALOME: path to Salome 
+#      (for Salome-meca 2017: installationdir//salome_meca/appli_V2017.0.2/salome)
+#   - WRKDIR: Working Directory
+#   - E (Pa): Young modulus
+#   - NU: Poisson Ratio
+#   - H (m): Plate Thickness
+#   - SEG_A: number of segments along side a
+#   - SEG_B: number of segments along side b
+#   - PRESS (Pa): Uniform pressure
+#   - BC: boundary conditions; simply supported along contour SSSS, or clampped CCCC
+# Note:
+#  The input file is provided to fesim.py as an
+#  argument.   
+################################################
+
+# Geometry file
+$GEOFILE = ./test_data/plate.iges
+
+# Salome 
+$SALOME = /opt/salome_meca/appli_V2017.0.2/salome
+
+# Working Directory
+$WRKDIR = ./test_data
+
+# Material Prop: Young Modulus (Pa), Poisson Ratio, Plate Thickness (m)
+$E = 2.0e11
+$NU = 0.3
+$H = 0.001
+
+# Mesh Info: number of segments along side a and b
+$SEG_A = 10
+$SEG_B = 20
+
+# Pressure (Pa)
+$PRES = 200.0
+
+# Boundary conditions
+$BC = SSSS
+
+
+

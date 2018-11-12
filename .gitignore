@@ -1,0 +1,12 @@
+# pycharm folder #
+#================#
+.idea
+
+# pychache folder #
+#=================#
+__pycache__
+
+# Result and mesh Files #
+#==============#
+**Results.txt
+**.med
